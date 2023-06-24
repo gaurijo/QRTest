@@ -25,8 +25,8 @@ class QRProxyTest < MiniTest::Test
     @generate = @browser.find_element(:id, "button-create-qr-code")
     assert(@generate.enabled?)
 
-    # @generate.execute_script('arguments[0].click()', button)
-    # assert(@generate.enabled? == false)
+    @browser.execute_script("arguments[0].click();", @generate)
+    assert(@generate.enabled? == false)
     # pp @generate.rect
     
     # @generate.click(x: 5, y: 5)
