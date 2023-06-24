@@ -5,6 +5,7 @@ require 'webdrivers'
 class QRProxyTest < MiniTest::Test 
   def setup 
     @browser = Selenium::WebDriver.for :chrome 
+    @wait = Selenium::WebDriver::Wait.new(:timeout => 15)
   end
   
   def test_qrproxy
@@ -14,6 +15,9 @@ class QRProxyTest < MiniTest::Test
     ## check single color radio button is enabled by default
     @single_color = @browser.find_element(:name => "colorMode", :value => "single")
     assert(@single_color.enabled?)
-  end
 
+    @cb = @browser.find_element(:css, 'input[ng-model="customEyeColor"]')
+    
+    assert(@cb.selected? == false)
+  end
 end
