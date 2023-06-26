@@ -35,28 +35,32 @@ class QRProxyTest < MiniTest::Test
     @browser.execute_script("arguments[0].click();", @generate)
     assert(@generate.enabled? == false)
 
+    #finds the preview for no logo
+    @no_logo = @browser.find_elements(:xpath, "//div[@class='placeholder']//span[text()='No Logo']")
+    assert(@no_logo.any?)
     #todo: user downloads QR code as PNG
 
     ## user quits browser 
     # @browser.quit 
 
   ## Scenario 2: User customizes their inputs before generating qr code
-  #todo: add a logo or upload image logo
     ## check when add_logo pane/row is clicked on, it turns the pane editing view to active"
     @add_logo = @browser.find_element(:class, "pane")
     @browser.execute_script("arguments[0].click();", @add_logo)
     assert(@add_logo[:class] == "pane active")
 
-    #finds the preview for no logo
-    @no_logo = @browser.find_elements(:xpath, "//div[@class='placeholder']//span[text()='No Logo']")
-    assert(@no_logo.any?)
-
-    # @logo_preview = @new_logo.find_element(:class, "placeholder")
-    # @browser.execute_script("arguments[0].click();", @new_logo)
-    # assert(@logo_preview[:class] == "placeholder ng-hide")
-    #todo: change design pattern
+    ##assert that the class attribute for the logo element is NOT active at first
+    @logo_element = @browser.find_element(:css, "div.shape.ng-scope")
+    @class = @logo_element.attribute("class")
+    assert(!@class.include?("active"))
+    
+    ## after clicking on a pre-selected logo, check that the logo element class attribute turns to active
+    @updated_class = @logo_element.attribute("class")
+    assert(@updated_class.include?("active"))
   end
+end
   
+  #todo: change design pattern
   #todo: customize colors 
   # @color_picker = @browser.find_element(:css, "background-color")
   # @new_color = 'red'
@@ -65,5 +69,4 @@ class QRProxyTest < MiniTest::Test
   # assert(actual_color == expected_color)
   ## Scenario 3: Error Handling -- if a user tries to implement something they cannot or should not they will get an alert
   ## for foreground color, if the color is too light (>= 160) an alert pops up 'we recommend to make your color darker'
-end
     
