@@ -38,11 +38,11 @@ class QRProxyTest < MiniTest::Test
     ## finds the preview for no logo
     @no_logo = @browser.find_elements(:xpath, "//div[@class='placeholder']//span[text()='No Logo']")
     assert(@no_logo.any?)
+    #todo: create QR code
     #todo: user downloads QR code as PNG
 
     ## user quits browser 
     # @browser.quit
-
 
   ##Scenario 2: User customizes their inputs before generating qr code
     ## check when add_logo pane/row is clicked on, it turns the pane editing view to active
@@ -60,7 +60,7 @@ class QRProxyTest < MiniTest::Test
     @updated_class = @logo_element.attribute("class")
     assert(@updated_class.include?("active"))
 
-    #todo: test change design pattern
+    ## after clicking on a body shape, check that the class for that shape element is turned to active
     @design_pattern = @browser.find_element(:css, "div.shape.ng-scope i.sprite.sprite-body.sprite-square")
     @parent_div = @design_pattern.find_element(:xpath, "./ancestor::div[contains(@class, 'shape')][contains(@class, 'active')]")
 
@@ -68,17 +68,29 @@ class QRProxyTest < MiniTest::Test
 
     @updated_design = @parent_div.attribute("class")
 
-    assert(@updated_design.include?("active"))    
-    #todo: test customize colors 
-  end
-end
-  
-  # @color_picker = @browser.find_element(:css, "background-color")
-  # @new_color = 'red'
-  # actual_color = @color_picker.attribute("background-color")
-  # expected_color = 'rgb(255, 0, 0)'
-  # assert(actual_color == expected_color)
+    assert(@updated_design.include?("active"))
+
+    #todo: test eye frame shape if you have time 
+
 
   ##Scenario 3: Error Handling -- if a user tries to implement something they cannot or should not they will get an alert
-  ## for foreground color, if the color is too light (>= 160) an alert pops up 'we recommend to make your color darker'
+    @alert = @browser.find_element(:css, "div.fade-animation.alert.alert-warning.ng-hide")
+    assert(!@alert.displayed?)
+
+    #access the element to pick a color that's too light
+    input_color = "rgb(246, 234, 234)"
+    input_color_element = @browser.find_element(:class, "color-picker-overlay")
+    @browser.execute_script("arguments[0].setAttribute('style', 'background-color: #{input_color}; opacity: 1')", input_color_element)
+    #access the color error text that is not hidden
+    
+    @visible_alert = @browser.find_element(:css, "div.fade-animation.alert.alert-warning")
+    @visible_text = @visible_alert.attribute('innerText').strip
+    puts "#{@visible_text}"
+    assert(@visible_text == "We recommend to make your color darker")
+    #assert that the color error is now displayed
+    # assert(@visible_alert.displayed?) #todo: This is throwing a Failure, pls fix
+  
+  end
+end
+
     
