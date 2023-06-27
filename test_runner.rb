@@ -46,9 +46,6 @@ class QRProxyTest < MiniTest::Test
 
     assert(@browser.page_source.include?("download('png')"), "Download action failed")
 
-    ## user quits browser 
-    # @browser.quit
-
   ##Scenario 2: User customizes some inputs before generating qr code
     ## check when add_logo pane/row is clicked on, it turns the pane editing view to active
     add_logo = @browser.find_element(:class, "pane")
