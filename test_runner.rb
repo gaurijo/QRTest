@@ -31,20 +31,20 @@ class QRProxyTest < MiniTest::Test
     @generate = @browser.find_element(:id, "button-create-qr-code")
     assert(@generate.enabled?)
 
-    ## check that create qr code button is disabled once a user clicks on it
-    @browser.execute_script("arguments[0].click();", @generate)
-    assert(@generate.enabled? == false)
-
     ## finds the preview for no logo
     @no_logo = @browser.find_elements(:xpath, "//div[@class='placeholder']//span[text()='No Logo']")
     assert(@no_logo.any?)
-    #todo: create QR code
+
+    ## create the qr code; check that create qr code button is disabled once a user clicks on it
+    @browser.execute_script("arguments[0].click();", @generate)
+    assert(@generate.enabled? == false)
+
     #todo: user downloads QR code as PNG
 
     ## user quits browser 
     # @browser.quit
 
-  ##Scenario 2: User customizes their inputs before generating qr code
+  ##Scenario 2: User customizes some inputs before generating qr code
     ## check when add_logo pane/row is clicked on, it turns the pane editing view to active
     @add_logo = @browser.find_element(:class, "pane")
     @browser.execute_script("arguments[0].click();", @add_logo)
@@ -74,6 +74,7 @@ class QRProxyTest < MiniTest::Test
 
 
   ##Scenario 3: Error Handling -- if a user tries to implement something they cannot or should not they will get an alert
+    #by default alert is hidden
     @alert = @browser.find_element(:css, "div.fade-animation.alert.alert-warning.ng-hide")
     assert(!@alert.displayed?)
 
@@ -84,9 +85,11 @@ class QRProxyTest < MiniTest::Test
     
     #access the color error text that is not hidden
     @visible_alert = @browser.find_element(:css, "div.fade-animation.alert.alert-warning")
-    @visible_text = @visible_alert.attribute('innerText').strip
 
+    #removes any leading/trailing whitespace to access the actual message of the alert
+    @visible_text = @visible_alert.attribute('innerText').strip
     puts "#{@visible_text}"
+
     assert(@visible_text == "We recommend to make your color darker")
   end
 end
