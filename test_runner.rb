@@ -81,15 +81,13 @@ class QRProxyTest < MiniTest::Test
     input_color = "rgb(246, 234, 234)"
     input_color_element = @browser.find_element(:class, "color-picker-overlay")
     @browser.execute_script("arguments[0].setAttribute('style', 'background-color: #{input_color}; opacity: 1')", input_color_element)
-    #access the color error text that is not hidden
     
+    #access the color error text that is not hidden
     @visible_alert = @browser.find_element(:css, "div.fade-animation.alert.alert-warning")
     @visible_text = @visible_alert.attribute('innerText').strip
+
     puts "#{@visible_text}"
     assert(@visible_text == "We recommend to make your color darker")
-    #assert that the color error is now displayed
-    # assert(@visible_alert.displayed?) #todo: This is throwing a Failure, pls fix
-  
   end
 end
 
