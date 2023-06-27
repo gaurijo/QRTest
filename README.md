@@ -9,7 +9,8 @@
 - For this challenge I instantiated `chrome` as my web `browser/driver`, however you may utilize a different browser (e.g. `firefox`) as long as you instantiate it within the `setup method`.
   - `Selenium::WebDriver.for {:browser_name}`
 - in terminal, run $`ruby test_runner.rb`
-  - ![Screen Shot 2023-06-27 at 2 41 37 PM](https://github.com/gaurijo/QRTest/assets/103534307/29a3c50b-8959-44dd-ac7d-48f8ace99833)
+  - ![Screen Shot 2023-06-27 at 2 41 37 PM](https://github.com/gaurijo/QRTest/assets/103534307/61b311e5-0fa9-45d9-ac3d-764b7ee633d3)
+
 ## Design Decisions && Implementation
 
 ### Why Selenium WebDriver?
