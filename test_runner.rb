@@ -1,6 +1,7 @@
 require 'minitest/autorun'
 require 'selenium-webdriver'
 require 'webdrivers'
+require 'tmpdir'
 
 class QRProxyTest < MiniTest::Test 
   def setup 
@@ -39,7 +40,11 @@ class QRProxyTest < MiniTest::Test
     @browser.execute_script("arguments[0].click();", @generate)
     assert(@generate.enabled? == false)
 
-    #todo: user downloads QR code as PNG
+    ## user downloads their QR code as default png file
+    @png = @browser.find_element(:id, "button-download-qr-code-png")
+    @browser.execute_script("arguments[0].click();", @png)
+
+    assert(@browser.page_source.include?("download('png')"), "Download action failed")
 
     ## user quits browser 
     # @browser.quit
@@ -88,7 +93,6 @@ class QRProxyTest < MiniTest::Test
 
     #removes any leading/trailing whitespace to access the actual message of the alert
     @visible_text = @visible_alert.attribute('innerText').strip
-    puts "#{@visible_text}"
 
     assert(@visible_text == "We recommend to make your color darker")
   end
