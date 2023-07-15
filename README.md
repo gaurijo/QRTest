@@ -1,4 +1,4 @@
-# Bitly Jr. SDET Challenge
+# Automated Testing for QR Code Generator
 ## Built with:
   ![Ruby](https://img.shields.io/badge/ruby-%23CC342D.svg?style=for-the-badge&logo=ruby&logoColor=white)
   ![Selenium](https://img.shields.io/badge/-selenium-%43B02A?style=for-the-badge&logo=selenium&logoColor=white) 
