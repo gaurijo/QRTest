@@ -2,7 +2,8 @@
 ## Built with:
   ![Ruby](https://img.shields.io/badge/ruby-%23CC342D.svg?style=for-the-badge&logo=ruby&logoColor=white)
   ![Selenium](https://img.shields.io/badge/-selenium-%43B02A?style=for-the-badge&logo=selenium&logoColor=white) 
-
+## Overview 
+- This project implements a `runner file` of automated test scripts to test Smoke functionality of a QR Code Generator website
 ## Install and Run on your local machine:
 - gem install `selenium-webdriver` 
 - $`bundle install` 
